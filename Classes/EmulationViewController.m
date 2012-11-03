@@ -273,9 +273,9 @@ void saveScreenshotToFile(char *filepath)
             self.view.bounds = CGRectMake(0, 0, 480, 320);
             ScreenLayer *layer = (ScreenLayer *)self.view.layer;
             layer.anchorPoint = anchorPoint;
-            layer.rotateTransform = CGAffineTransformRotate(CGAffineTransformIdentity, RADIANS(90.0));
+            layer.rotateTransform = CGAffineTransformRotate(CGAffineTransformIdentity, RADIANS(0.0));
             self.view.superview.bounds = CGRectMake(0, 0, 320, 480);
-            self.view.frame = CGRectMake(320, 0, self.view.frame.size.width, self.view.frame.size.height);
+            //self.view.frame = CGRectMake(320, 0, self.view.frame.size.width, self.view.frame.size.height);
             self.view.superview.frame = CGRectMake(0, 0, self.view.superview.frame.size.width, self.view.superview.frame.size.height);
             
             AppDelegate().snesControllerViewController.sustainButton.center = CGPointMake(24, 456);
@@ -295,9 +295,9 @@ void saveScreenshotToFile(char *filepath)
             self.view.bounds = CGRectMake(160, 0, 480, 320);
             ScreenLayer *layer = (ScreenLayer *)self.view.layer;
             layer.anchorPoint = anchorPoint;
-            layer.rotateTransform = CGAffineTransformRotate(CGAffineTransformIdentity, RADIANS(90.0));
+            layer.rotateTransform = CGAffineTransformRotate(CGAffineTransformIdentity, RADIANS(0.0));
             self.view.superview.bounds = CGRectMake(0, 0, 320, 480);
-            self.view.frame = CGRectMake(320, 0, self.view.frame.size.width, self.view.frame.size.height);
+            //self.view.frame = CGRectMake(320, 0, self.view.frame.size.width, self.view.frame.size.height);
             self.view.superview.frame = CGRectMake(0, 0, self.view.superview.frame.size.width, self.view.superview.frame.size.height);
             
             AppDelegate().snesControllerViewController.sustainButton.center = CGPointMake(24, 456);
