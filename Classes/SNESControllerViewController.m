@@ -96,6 +96,14 @@ void rt_dispatch_sync_on_main_thread(dispatch_block_t block) {
         [ControllerAppDelegate().sessionController disconnect];
         [ControllerAppDelegate().sessionController stopSearching];
     }
+    
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    swipe.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:swipe];
+}
+
+-(void)handleSwipe:(UISwipeGestureRecognizer *)gr {
+    [AppDelegate().emulationViewController rotateFilter];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -132,6 +140,7 @@ void rt_dispatch_sync_on_main_thread(dispatch_block_t block) {
 
 - (IBAction) buttonPressed:(id)sender
 {
+    
 	if (sender == connectionButton) {
 		[ControllerAppDelegate().sessionController showModal];
 	} 
@@ -197,7 +206,8 @@ void rt_dispatch_sync_on_main_thread(dispatch_block_t block) {
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{	    
+{
+    
 	int touchstate[10];
 	//Get all the touches.
 	int i;
@@ -227,6 +237,7 @@ void rt_dispatch_sync_on_main_thread(dispatch_block_t block) {
 		{
 			struct CGPoint point;
 			point = [touch locationInView:self.view];
+            point = CGPointMake(point.x, 320 - point.y);
 			
 			touchstate[i] = 1;
 			
@@ -452,6 +463,7 @@ void rt_dispatch_sync_on_main_thread(dispatch_block_t block) {
         NSData *data = [NSData dataWithBytes:&gp2x_pad_status length:sizeof(gp2x_pad_status)];
         [AppDelegate().controlPadManager convertData:data padNumber:0];
     }
+    
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -490,29 +502,29 @@ void rt_dispatch_sync_on_main_thread(dispatch_block_t block) {
 			
 			switch(i)
 			{
-				case 0:    DownLeft   	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 1:    Down   	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 2:    DownRight    = CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 3:    Left  	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 4:    Right  	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 5:    UpLeft     	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 6:    Up     	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 7:    UpRight  	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 8:    Select = CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 9:    Start  = CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 10:   LPad   = CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 11:   RPad   = CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 12:   Menu   = CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 13:   ButtonDownLeft   	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 14:   ButtonDown   	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 15:   ButtonDownRight    	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 16:   ButtonLeft  		= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 17:   ButtonRight  	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 18:   ButtonUpLeft     	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 19:   ButtonUp     	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 20:   ButtonUpRight  	= CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 21:   LPad2   = CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
-				case 22:   RPad2   = CGRectMake( coords[0], coords[1], coords[2], coords[3] ); break;
+				case 0:    DownLeft   	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 1:    Down   	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 2:    DownRight    = CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 3:    Left  	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 4:    Right  	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 5:    UpLeft     	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 6:    Up     	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 7:    UpRight  	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 8:    Select = CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 9:    Start  = CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 10:   LPad   = CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 11:   RPad   = CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 12:   Menu   = CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 13:   ButtonDownLeft   	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 14:   ButtonDown   	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 15:   ButtonDownRight    	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 16:   ButtonLeft  		= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 17:   ButtonRight  	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 18:   ButtonUpLeft     	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 19:   ButtonUp     	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 20:   ButtonUpRight  	= CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 21:   LPad2   = CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
+				case 22:   RPad2   = CGRectMake( coords[1], coords[0], coords[3], coords[2] ); break;
 			}
            	i++;
         }

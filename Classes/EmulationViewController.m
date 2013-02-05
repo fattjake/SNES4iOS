@@ -15,6 +15,12 @@
 #import <pthread.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "GPUImage.h"
+#import "GPUImageFilterScanlines.h"
+#import "GPUImageCRTFilter.h"
+
+#import <AssetsLibrary/AssetsLibrary.h>
+
 #define kSavedState @"savedState"
 
 #define RADIANS(degrees) ((degrees * M_PI) / 180.0)
@@ -34,7 +40,8 @@ pthread_t main_tid;
 // C wrapper function for emulation core access
 void refreshScreenSurface()
 {
-	[AppDelegate().emulationViewController performSelectorOnMainThread:@selector(refreshScreen) withObject:nil waitUntilDone:NO];
+	//[AppDelegate().emulationViewController performSelectorOnMainThread:@selector(refreshScreen) withObject:nil waitUntilDone:NO];
+    [AppDelegate().emulationViewController refreshScreen];
 }
 
 // entry point for emulator thread
@@ -111,7 +118,25 @@ void saveScreenshotToFile(char *filepath)
 
 }
 
-@implementation EmulationViewController
+@implementation EmulationViewController {
+    GPUImageView *v;
+    GPUImageRawDataInput *dataInput;
+    GPUImageFilter *filter;
+    
+    NSArray *filtersArray;
+    NSArray *filterData;
+    
+    int filterIndx;
+    
+    
+    BOOL updating;
+    GPUImageMovieWriter *mw;
+
+    GLuint videoTexture;
+    
+    CFAbsoluteTime timeDiff;
+}
+
 @synthesize pauseAlert;
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -123,14 +148,76 @@ void saveScreenshotToFile(char *filepath)
 }
 */
 
+-(NSURL *)movieURL {
+    NSString *tmpDir = NSTemporaryDirectory();
+    NSString *urlString = [tmpDir stringByAppendingPathComponent:@"movies/tmpMov.mov"];
+    return [NSURL fileURLWithPath:urlString];
+}
+
+-(void)checkForAndDeleteFile {
+    NSLog(@"checkfor and delete file");
+    NSFileManager *fm = [NSFileManager defaultManager];
+    BOOL exist = [fm fileExistsAtPath:[self movieURL].absoluteString];
+    NSError *err;
+    if (exist) {
+        [fm removeItemAtURL:[self movieURL] error:&err];
+        NSLog(@"file deleted");
+        if (err) {
+            NSLog(@"file remove error, %@", err.localizedDescription );
+        }
+        
+    } else {
+        NSLog(@"no file by that name");
+    }
+}
+
+- (void)saveMovieToCameraRoll
+{
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    BOOL exist = [fm fileExistsAtPath:[self movieURL].absoluteString];
+    NSLog(@"save movie to camera roll, %d, %@", exist, [self movieURL].absoluteString);
+	ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+	[library writeVideoAtPathToSavedPhotosAlbum:[self movieURL]
+								completionBlock:^(NSURL *assetURL, NSError *error) {
+									if (error) {
+                                        NSLog(@"Error %@", [error localizedDescription]);
+                                    } else {
+                                        
+                                        NSLog(@"finished saving");
+                                    }
+								}];
+}
+
+
+-(void)startRecordingVideo {
+    [self checkForAndDeleteFile];
+    mw = [[GPUImageMovieWriter alloc] initWithMovieURL:[self movieURL] size:CGSizeMake(480, 320)];
+    timeDiff = CFAbsoluteTimeGetCurrent();
+    [mw startRecording];
+    [filter addTarget:mw];
+    self.isRecording = YES;
+}
+
+-(void)finishRecordingVideo {
+    [filter removeTarget:mw];
+    [mw finishRecording];
+    
+    self.isRecording = NO;
+    [self saveMovieToCameraRoll];
+}
 
 - (void)loadView {
 	self.view = (UIView *)[[ScreenView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
+    updating = YES;
+    v = [[GPUImageView alloc] initWithFrame:CGRectMake(0, 0, 480, 320)];
+    [self.view addSubview:v];
+    //self.view = v;
+    /*
     if (ControllerAppDelegate().controllerType == SNESControllerTypeLocal) {
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
-    }
+    }*/
     
     /*if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -156,11 +243,104 @@ void saveScreenshotToFile(char *filepath)
         [self.view addSubview:saveStateButton];
     }*/
     //Above methods were a replacement to the double-tapping to access these options, which sometimes crashes the app. Convering over to GCD appears to have fixed this crash, but I've left these here just in case.
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"ChangeFilter" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        NSDictionary *inf = [note userInfo];
+        if ([inf objectForKey:@"filterNumber"]) {
+            [self setFilter:[[inf objectForKey:@"filterNumber"] intValue]];
+        } else {
+            [self rotateFilter];
+        }
+    }];
+    
+    NSMutableArray *ma = [NSMutableArray array];
+    
+    NSString *p = [[NSBundle mainBundle] pathForResource:@"Filters" ofType:@"plist"];
+    filterData = [[NSArray arrayWithContentsOfFile:p] retain];
+    
+    /*
+    for (NSDictionary *filterD in filterData) {
+        NSString *className = [filterD objectForKey:@"FilterName"];
+        Class clss = NSClassFromString(className);
+        id f = [[clss alloc] init];
+        
+        NSLog(@"insert, %@, %@, %@", className, clss, f);
+        [ma addObject:f];
+    }
+    */
+    
+    GPUImagePolarPixellateFilter *polarPixellate = [[GPUImagePolarPixellateFilter alloc] init];
+    polarPixellate.pixelSize = CGSizeMake(0.1, 0.01);
+    polarPixellate.center = CGPointMake(0.0, 0.0);
+    GPUImageCannyEdgeDetectionFilter *canny = [[GPUImageCannyEdgeDetectionFilter alloc] init];
+    GPUImagePixellateFilter *pixellate = [[GPUImagePixellateFilter alloc] init];
+    pixellate.fractionalWidthOfAPixel = 0.02;
+    GPUImageGaussianBlurFilter *blur = [[GPUImageGaussianBlurFilter alloc] init];
+    GPUImageHalftoneFilter *halftone = [[GPUImageHalftoneFilter alloc] init];
+    halftone.fractionalWidthOfAPixel = 0.03;
+    GPUImageCrosshatchFilter *crosshatch = [[GPUImageCrosshatchFilter alloc] init];
+    crosshatch.crossHatchSpacing = 0.03;
+    GPUImageSmoothToonFilter *toon = [[GPUImageSmoothToonFilter alloc] init];
+    GPUImageBulgeDistortionFilter *bulge = [[GPUImageBulgeDistortionFilter alloc] init];
+    bulge.radius = .5;
+    GPUImageUnsharpMaskFilter *unsharp = [[GPUImageUnsharpMaskFilter alloc] init];
+    unsharp.intensity = 3;
+    GPUImageSketchFilter *sketch = [[GPUImageSketchFilter alloc] init];
+    GPUImageHueFilter *passThrough = [[GPUImageHueFilter alloc] init];
+    passThrough.hue = 0;
+    GPUImageFilterScanlines *scan = [[GPUImageFilterScanlines alloc] init];
+    GPUImageCRTFilter *crt = [[GPUImageCRTFilter alloc] init];
+    crt.CRTInputSize = CGPointMake(256, 224);
+    crt.CRTOutputSize = CGPointMake(480, 320);
+    GPUImageGlassSphereFilter *sphere = [[GPUImageGlassSphereFilter alloc] init];
+    sphere.radius = .6;
+    
+    filtersArray = @[
+    passThrough,
+    sphere,
+    scan,
+    polarPixellate,
+    canny,
+    pixellate,
+    blur,
+    halftone,
+    crosshatch,
+    toon,
+    bulge,
+    unsharp,
+    sketch
+    ];
+    
+    [filtersArray retain];
+    
+    filter = filtersArray[0];
+    
+    [filter addTarget:v];
+    
+    /*
+    //glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, videoTexture);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 256, 224, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, vrambuffer);
+    
+    dataInput = [[GPUImageTextureInput alloc] initWithTexture:videoTexture size:CGSizeMake(256, 224)];
+    //glActiveTexture(GL_TEXTURE);
+     */
+    dataInput = [[GPUImageRawDataInput alloc] initWithBytes:vrambuffer size:CGSizeMake(256, 224) pixelFormat:kDataInputPixelFormat_RGB565];
+    
+    [dataInput addTarget:filter];
+    
+    filterIndx = 0;
+    
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(rotateFilter)];
+    swipe.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:swipe];
 }
 
+/*
 - (void)viewWillAppear:(BOOL)animated {
     [self didRotate:[NSNotification notificationWithName:@"RotateNotification" object:nil]];
-}
+}*/
 
 #pragma mark - Save States
 
@@ -190,9 +370,21 @@ void saveScreenshotToFile(char *filepath)
 
 - (void) refreshScreen
 {
-    //[(ScreenView *) self.view update];
-    [self.view setNeedsDisplay];
-	//[self.view.layer setNeedsDisplay];
+    
+    if (updating) {
+     
+        [dataInput updateDataFromBytes:vrambuffer size:CGSizeMake(256, 224) pixelFormat:kDataInputPixelFormat_RGB565];
+        
+        CMTime frameTime = CMTimeMakeWithSeconds(CFAbsoluteTimeGetCurrent() - timeDiff, 30);
+        [dataInput processDataWithFrameTime:frameTime];
+    }
+    /*
+    //glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, videoTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 256, 224, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, vrambuffer);
+    CMTime frameTime = CMTimeMakeWithSeconds(CFAbsoluteTimeGetCurrent(), 1000);
+    [dataInput processTextureWithFrameTime:frameTime];
+    */
 }
 
 - (void) startWithRom:(NSString *)romFile
@@ -216,8 +408,17 @@ void saveScreenshotToFile(char *filepath)
     dispatch_release(dispatchQueue);
 }
 
+- (BOOL) shouldAutorotate
+{
+    return NO;
+}
 
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscapeRight & UIInterfaceOrientationMaskLandscapeLeft;
+}
 
+/*
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     
@@ -228,9 +429,10 @@ void saveScreenshotToFile(char *filepath)
     else {
         return (interfaceOrientation == UIInterfaceOrientationPortrait);
     }
-}
+}*/
 
 - (void) didRotate:(NSNotification *)notification {
+    /*
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     if ((orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationLandscapeLeft || 
         orientation == UIDeviceOrientationLandscapeRight) && ![(UIAlertView *)self.pauseAlert isVisible] && self.view.superview != nil && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -303,6 +505,7 @@ void saveScreenshotToFile(char *filepath)
             AppDelegate().snesControllerViewController.sustainButton.center = CGPointMake(24, 456);
         }
     }
+     */
 }
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -313,6 +516,41 @@ void saveScreenshotToFile(char *filepath)
         CGRect rect = CGRectMake(touchPoint.x, touchPoint.y, 60, 60);
 		[self showPauseDialogFromRect:rect];
 	}
+
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:v];
+    CGPoint prevLocation = [touch previousLocationInView:v];
+    
+    float adjustment = location.y - prevLocation.y;
+
+}
+
+-(void)setFilter:(int)filterNum {
+    if (filterNum > 0 && filterNum < [filtersArray count]) {
+        [dataInput removeTarget:filter];
+        [filter removeTarget:v];
+        filterIndx = filterNum;
+        filter = [filtersArray objectAtIndex:filterIndx];
+        [dataInput addTarget:filter];
+        [filter addTarget:v];
+        NSLog(@"New Filter %@", filter);
+    }
+}
+
+-(void)rotateFilter {
+    [dataInput removeTarget:filter];
+    [filter removeTarget:v];
+    filterIndx++;
+    if (filterIndx > ([filtersArray count] - 1)) {
+        filterIndx = 0;
+    }
+    filter = filtersArray[filterIndx];
+    [dataInput addTarget:filter];
+    [filter addTarget:v];
+    NSLog(@"New Filter %@", filter);
 }
 
 - (void) showPauseDialogFromRect:(CGRect)rect {
@@ -320,6 +558,14 @@ void saveScreenshotToFile(char *filepath)
     NSString *destructiveButtonTitle = @"Quit Game";
     NSString *button1Title = @"Save State";
     NSString *button2Title = @"Save State to New File";
+    NSString *newFilter = @"Rotate Filter";
+    NSString *recording;
+    if (self.isRecording) {
+        recording = @"Stop Recording";
+    } else {
+        recording = @"Start Recording";
+    }
+    
     __emulation_paused = 1;
     //clearFramebuffer();
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
@@ -336,7 +582,7 @@ void saveScreenshotToFile(char *filepath)
                                                         message:nil 
                                                        delegate:self 
                                               cancelButtonTitle:destructiveButtonTitle 
-                                              otherButtonTitles:button1Title, button2Title, @"Cancel", nil];
+                                              otherButtonTitles:button1Title, button2Title, newFilter,  nil];
         /*CGFloat rotation = DEGREES(atan2(self.view.superview.transform.b, self.view.superview.transform.a));
         CGFloat rotationAngle = 0.0;
         if (rotation >= -5 && rotation <= 5) {//Gives us a margin of error of 10, even though we shouldn't need it
@@ -366,6 +612,8 @@ void saveScreenshotToFile(char *filepath)
     NSInteger quitIndex = 0;
     NSInteger saveCurrentIndex = 1;
 	NSInteger saveNewIndex = 2;
+    NSInteger newFilterIndex = 3;
+    NSInteger recordingIndex = 4;
     //NSInteger cancelButtonIndex = 3;
     
     /*if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -385,7 +633,15 @@ void saveScreenshotToFile(char *filepath)
 	} else if (buttonIndex == saveNewIndex) {
 		NSLog(@"save to new file button clicked");
 		__emulation_saving = 1;
-	}
+	} else if (buttonIndex == newFilterIndex) {
+        [self rotateFilter];
+    } else if (buttonIndex == recordingIndex) {
+        if (self.isRecording) {
+            [self finishRecordingVideo];
+        } else {
+            [self startRecordingVideo];
+        }
+    }
     __emulation_paused = 0;
 }
 

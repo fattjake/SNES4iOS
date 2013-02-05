@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface EmulationViewController : UIViewController <UIActionSheetDelegate, UIAlertViewDelegate> {
+    
 }
 
 @property (strong, nonatomic) id pauseAlert;
+@property (nonatomic, assign) BOOL isRecording;
 
 - (void) startWithRom:(NSString *)romFile;
 
@@ -27,5 +29,6 @@
 - (void) didRotate:(NSNotification *)notification;
 - (void) showPauseDialogFromRect:(CGRect)rect;
 - (void)object:(id)object clickedButtonAtIndex:(NSInteger)buttonIndex;
+-(void)rotateFilter;
 
 @end

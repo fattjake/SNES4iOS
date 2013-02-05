@@ -9,11 +9,15 @@
 #import "ScreenLayer.h"
 #import "SettingsViewController.h"
 
+
 #import <math.h>
 #define RADIANS( degrees ) ( degrees * M_PI / 180 )
 
 unsigned int *screenPixels;
-@implementation ScreenLayer
+
+@implementation ScreenLayer 
+
+
 @synthesize rotateTransform;
 
 + (id) defaultActionForKey:(NSString *)key
@@ -71,6 +75,9 @@ unsigned int *screenPixels;
                                                          name:@"UIDeviceOrientationDidChangeNotification" 
                                                        object:nil];
         }*/
+        
+        
+        
 	}
 	return self;
 }
@@ -79,6 +86,7 @@ unsigned int *screenPixels;
 - (void)display {
     //NSLog(@"ScreenLayer display");
     IOSurfaceLock(_surface, 1, &_seed);
+    
     self.affineTransform = CGAffineTransformIdentity;
     self.contents = nil;
     self.affineTransform = rotateTransform;

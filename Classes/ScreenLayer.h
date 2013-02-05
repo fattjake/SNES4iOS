@@ -14,6 +14,7 @@
 	IOSurfaceRef _surface;
     uint32_t _seed;
     CGAffineTransform rotateTransform;
+    
 }
 @property (nonatomic) CGAffineTransform rotateTransform;
 

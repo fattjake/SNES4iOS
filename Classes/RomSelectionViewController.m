@@ -13,6 +13,7 @@
 #import "SNESControllerViewController.h"
 #import "ScreenLayer.h"
 #import "SettingsViewController.h"
+//#import "GSEvent.h"
 
 #define RADIANS(degrees) ((degrees * M_PI) / 180.0)
 
@@ -389,22 +390,28 @@
         }
         SNESControllerViewController *controllerViewController = AppDelegate().snesControllerViewController;
         AppDelegate().snesControllerAppDelegate.controllerType = SNESControllerTypeLocal;
-        AppDelegate().emulationViewController.view.userInteractionEnabled = NO;
+        //AppDelegate().emulationViewController.view.userInteractionEnabled = NO;
         [controllerViewController.view insertSubview:AppDelegate().emulationViewController.view atIndex:0];
         controllerViewController.wantsFullScreenLayout = YES;
-        CGFloat rotationAngle = 90.0f;
-        AppDelegate().emulationViewController.view.bounds = CGRectMake(0, 0, 480, 320);
-        ScreenLayer *screenLayer = (ScreenLayer *)AppDelegate().emulationViewController.view.layer;
-        screenLayer.rotateTransform = CGAffineTransformRotate(CGAffineTransformIdentity, RADIANS(rotationAngle));
+        //CGFloat rotationAngle = 90.0f;
+        //AppDelegate().emulationViewController.view.bounds = CGRectMake(0, 0, 480, 320);
+        //controllerViewController.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, RADIANS(90.0));
+        //ScreenLayer *screenLayer = (ScreenLayer *)AppDelegate().emulationViewController.view.layer;
+        //screenLayer.rotateTransform = CGAffineTransformRotate(CGAffineTransformIdentity, RADIANS(0.0));
         
-        [AppDelegate().emulationViewController didRotate:[NSNotification notificationWithName:@"Notification" object:nil]];
+        //[AppDelegate().emulationViewController didRotate:[NSNotification notificationWithName:@"Notification" object:nil]];
         controllerViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [UIApplication sharedApplication].statusBarHidden = YES;
-        [self presentViewController:controllerViewController animated:YES completion:^{
+        [self presentViewController:AppDelegate().emulationViewController animated:YES completion:^{
             [AppDelegate().emulationViewController startWithRom:romPath];
             [AppDelegate() showEmulator:YES];
+            NSLog(@"Keyboard present %d", GSEventIsHardwareKeyboardAttached());
+            if (!GSEventIsHardwareKeyboardAttached()) {
+                [AppDelegate().emulationViewController.view addSubview:controllerViewController.view];
+            }
+         
         }];
-    }
+    } 
 	
 }
 

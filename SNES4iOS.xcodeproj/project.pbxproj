@@ -17,7 +17,6 @@
 		520D7C3E1618A9C4009306B7 /* iCadeReaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 520D7C3C1618A9C4009306B7 /* iCadeReaderView.m */; };
 		520D7C441618AA10009306B7 /* iCadeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 520D7C431618AA10009306B7 /* iCadeViewController.m */; };
 		6C3CE6EB135BCD0400D61F53 /* IOSurface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C3CE6EA135BCD0400D61F53 /* IOSurface.framework */; };
-		6CD00F45135FED04003E789A /* libpocketsnes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CD00F44135FED04003E789A /* libpocketsnes.a */; };
 		6CD00F60135FEE9C003E789A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CD00F5F135FEE9C003E789A /* AudioToolbox.framework */; };
 		6CD00F64135FEEBA003E789A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CD00F63135FEEBA003E789A /* libz.dylib */; };
 		BF3B5F4614A661C100AC8101 /* snes-1.txt in Resources */ = {isa = PBXBuildFile; fileRef = BF3B5F4414A661C100AC8101 /* snes-1.txt */; };
@@ -74,7 +73,43 @@
 		CEE8575D11AADBE100784F8D /* ArrowForward.png in Resources */ = {isa = PBXBuildFile; fileRef = CEE8575B11AADBE100784F8D /* ArrowForward.png */; };
 		CEEA77CE119F3F4400440258 /* ScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEA77CD119F3F4400440258 /* ScreenView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CEEA77D1119F3F6100440258 /* ScreenLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEA77D0119F3F6100440258 /* ScreenLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F22960AC16450F1700A82EAE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F22960AB16450F1600A82EAE /* OpenGLES.framework */; };
+		F22960C016451F7A00A82EAE /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F22960BD16451F7800A82EAE /* CoreMedia.framework */; };
+		F22960DA16456D6500A82EAE /* libpocketsnes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F22960D916456D6500A82EAE /* libpocketsnes.a */; };
+		F22960E716456DD400A82EAE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F22960E616456DD300A82EAE /* CoreVideo.framework */; };
+		F22960F716456E7200A82EAE /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F22960F216456E6600A82EAE /* libGPUImage.a */; };
+		F229610C1645C58100A82EAE /* GraphicsServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F229610B1645C58100A82EAE /* GraphicsServices.framework */; };
+		F229610E1645D6F000A82EAE /* Filters.plist in Resources */ = {isa = PBXBuildFile; fileRef = F229610D1645D6EE00A82EAE /* Filters.plist */; };
+		F229611E16473B5400A82EAE /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F229611D16473B5300A82EAE /* AssetsLibrary.framework */; };
+		F229612C164790E000A82EAE /* GPUImageFilterScanlines.m in Sources */ = {isa = PBXBuildFile; fileRef = F229612B164790DF00A82EAE /* GPUImageFilterScanlines.m */; };
+		F2648EC71647AB3F003FE846 /* GPUImageDotnBloomFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = F2648EC61647AB3F003FE846 /* GPUImageDotnBloomFilter.m */; };
+		F2648ECA1647BCC3003FE846 /* GPUImageCRTFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = F2648EC91647BCC3003FE846 /* GPUImageCRTFilter.m */; };
+		F2648ECD1647CCA0003FE846 /* GPUImageOldFilmFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = F2648ECC1647CCA0003FE846 /* GPUImageOldFilmFilter.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F22960F116456E6600A82EAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F22960E816456E6500A82EAE /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+		F22960F316456E6600A82EAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F22960E816456E6500A82EAE /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A34414DDB1EC00852800;
+			remoteInfo = GPUImageTests;
+		};
+		F22960F516456E6E00A82EAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F22960E816456E6500A82EAE /* GPUImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCF1A33314DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		6CD00DEC135FE472003E789A /* CopyFiles */ = {
@@ -108,7 +143,6 @@
 		520D7C421618AA10009306B7 /* iCadeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCadeViewController.h; sourceTree = "<group>"; };
 		520D7C431618AA10009306B7 /* iCadeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCadeViewController.m; sourceTree = "<group>"; };
 		6C3CE6EA135BCD0400D61F53 /* IOSurface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOSurface.framework; path = System/Library/PrivateFrameworks/IOSurface.framework; sourceTree = SDKROOT; };
-		6CD00F44135FED04003E789A /* libpocketsnes.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpocketsnes.a; path = src/snes4iphone_src/libpocketsnes.a; sourceTree = "<group>"; };
 		6CD00F5F135FEE9C003E789A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6CD00F63135FEEBA003E789A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF3B5F4414A661C100AC8101 /* snes-1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "snes-1.txt"; path = "../Classes/snes-1.txt"; sourceTree = "<group>"; };
@@ -201,6 +235,36 @@
 		CEEA77CD119F3F4400440258 /* ScreenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenView.m; sourceTree = "<group>"; };
 		CEEA77CF119F3F6100440258 /* ScreenLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenLayer.h; sourceTree = "<group>"; };
 		CEEA77D0119F3F6100440258 /* ScreenLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenLayer.m; sourceTree = "<group>"; };
+		F22960AB16450F1600A82EAE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		F22960BD16451F7800A82EAE /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		F22960D916456D6500A82EAE /* libpocketsnes.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpocketsnes.a; path = src/snes4iphone_src/libpocketsnes.a; sourceTree = "<group>"; };
+		F22960E616456DD300A82EAE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		F22960E816456E6500A82EAE /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = GPUImage/framework/GPUImage.xcodeproj; sourceTree = "<group>"; };
+		F22960FD1645C20800A82EAE /* GraphicsServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicsServices.h; sourceTree = "<group>"; };
+		F22960FE1645C20800A82EAE /* GSBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSBase.h; sourceTree = "<group>"; };
+		F22960FF1645C20800A82EAE /* GSCapability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSCapability.h; sourceTree = "<group>"; };
+		F22961001645C20800A82EAE /* GSColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSColor.h; sourceTree = "<group>"; };
+		F22961011645C20800A82EAE /* GSEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSEvent.h; sourceTree = "<group>"; };
+		F22961021645C20800A82EAE /* GSFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSFont.h; sourceTree = "<group>"; };
+		F22961031645C20800A82EAE /* GSGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSGeometry.h; sourceTree = "<group>"; };
+		F22961041645C20800A82EAE /* GSHeartbeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSHeartbeat.h; sourceTree = "<group>"; };
+		F22961051645C20800A82EAE /* GSHiccup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSHiccup.h; sourceTree = "<group>"; };
+		F22961061645C20800A82EAE /* GSKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSKeyboard.h; sourceTree = "<group>"; };
+		F22961071645C20800A82EAE /* GSMainScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSMainScreen.h; sourceTree = "<group>"; };
+		F22961081645C20800A82EAE /* GSMaps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSMaps.h; sourceTree = "<group>"; };
+		F22961091645C20800A82EAE /* GSStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSStatusBar.h; sourceTree = "<group>"; };
+		F229610A1645C20800A82EAE /* GSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSWindow.h; sourceTree = "<group>"; };
+		F229610B1645C58100A82EAE /* GraphicsServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GraphicsServices.framework; path = System/Library/PrivateFrameworks/GraphicsServices.framework; sourceTree = SDKROOT; };
+		F229610D1645D6EE00A82EAE /* Filters.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Filters.plist; path = ../Classes/Filters.plist; sourceTree = "<group>"; };
+		F229611D16473B5300A82EAE /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		F229612A164790DE00A82EAE /* GPUImageFilterScanlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageFilterScanlines.h; sourceTree = "<group>"; };
+		F229612B164790DF00A82EAE /* GPUImageFilterScanlines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageFilterScanlines.m; sourceTree = "<group>"; };
+		F2648EC51647AB3F003FE846 /* GPUImageDotnBloomFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageDotnBloomFilter.h; sourceTree = "<group>"; };
+		F2648EC61647AB3F003FE846 /* GPUImageDotnBloomFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageDotnBloomFilter.m; sourceTree = "<group>"; };
+		F2648EC81647BCC3003FE846 /* GPUImageCRTFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageCRTFilter.h; sourceTree = "<group>"; };
+		F2648EC91647BCC3003FE846 /* GPUImageCRTFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageCRTFilter.m; sourceTree = "<group>"; };
+		F2648ECB1647CCA0003FE846 /* GPUImageOldFilmFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageOldFilmFilter.h; sourceTree = "<group>"; };
+		F2648ECC1647CCA0003FE846 /* GPUImageOldFilmFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageOldFilmFilter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +272,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F229611E16473B5400A82EAE /* AssetsLibrary.framework in Frameworks */,
+				F22960F716456E7200A82EAE /* libGPUImage.a in Frameworks */,
+				F22960E716456DD400A82EAE /* CoreVideo.framework in Frameworks */,
+				F22960C016451F7A00A82EAE /* CoreMedia.framework in Frameworks */,
+				F22960AC16450F1700A82EAE /* OpenGLES.framework in Frameworks */,
 				BF7B7A1214A64C5E00014E61 /* AVFoundation.framework in Frameworks */,
 				BF7B7A1014A64C5600014E61 /* MediaPlayer.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
@@ -217,10 +286,11 @@
 				CE43A4B4119DF2B00007E399 /* QuartzCore.framework in Frameworks */,
 				CE43A4B6119DF2D80007E399 /* CoreSurface.framework in Frameworks */,
 				6C3CE6EB135BCD0400D61F53 /* IOSurface.framework in Frameworks */,
-				6CD00F45135FED04003E789A /* libpocketsnes.a in Frameworks */,
 				6CD00F60135FEE9C003E789A /* AudioToolbox.framework in Frameworks */,
 				6CD00F64135FEEBA003E789A /* libz.dylib in Frameworks */,
 				BF7B7A0E14A64C2D00014E61 /* libIOKit.dylib in Frameworks */,
+				F22960DA16456D6500A82EAE /* libpocketsnes.a in Frameworks */,
+				F229610C1645C58100A82EAE /* GraphicsServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +325,14 @@
 				CEEA77D0119F3F6100440258 /* ScreenLayer.m */,
 				CEE8574211AAA81100784F8D /* WebBrowserViewController.h */,
 				CEE8574311AAA81100784F8D /* WebBrowserViewController.m */,
+				F2648EC51647AB3F003FE846 /* GPUImageDotnBloomFilter.h */,
+				F2648EC61647AB3F003FE846 /* GPUImageDotnBloomFilter.m */,
+				F229612A164790DE00A82EAE /* GPUImageFilterScanlines.h */,
+				F229612B164790DF00A82EAE /* GPUImageFilterScanlines.m */,
+				F2648EC81647BCC3003FE846 /* GPUImageCRTFilter.h */,
+				F2648EC91647BCC3003FE846 /* GPUImageCRTFilter.m */,
+				F2648ECB1647CCA0003FE846 /* GPUImageOldFilmFilter.h */,
+				F2648ECC1647CCA0003FE846 /* GPUImageOldFilmFilter.m */,
 				BF7B7A0C14A64BEE00014E61 /* SNES Controller */,
 			);
 			path = Classes;
@@ -285,10 +363,10 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				F22960D916456D6500A82EAE /* libpocketsnes.a */,
 				28A0AAE50D9B0CCF005BE974 /* SNES4iOS_Prefix.pch */,
 				CE43A516119E087E0007E399 /* SNES4iOS-Info.plist */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
-				6CD00F44135FED04003E789A /* libpocketsnes.a */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -296,6 +374,12 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F229611D16473B5300A82EAE /* AssetsLibrary.framework */,
+				F22960FC1645C20800A82EAE /* GraphicsServices */,
+				F22960E816456E6500A82EAE /* GPUImage.xcodeproj */,
+				F22960E616456DD300A82EAE /* CoreVideo.framework */,
+				F22960BD16451F7800A82EAE /* CoreMedia.framework */,
+				F22960AB16450F1600A82EAE /* OpenGLES.framework */,
 				BF7B7A2814A64D3400014E61 /* IOSurface */,
 				BF7B7A2614A64D2100014E61 /* libkern */,
 				BF7B7A1314A64D0A00014E61 /* IOKit */,
@@ -426,6 +510,7 @@
 		CE43A4CC119DFEF70007E399 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F229610D1645D6EE00A82EAE /* Filters.plist */,
 				BFD71BAD14A5AC3700850EEE /* iPhone */,
 				CEE8575A11AADBE100784F8D /* ArrowBack.png */,
 				CEE8575B11AADBE100784F8D /* ArrowForward.png */,
@@ -458,6 +543,38 @@
 			path = CoreSurface;
 			sourceTree = "<group>";
 		};
+		F22960E916456E6500A82EAE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F22960F216456E6600A82EAE /* libGPUImage.a */,
+				F22960F416456E6600A82EAE /* GPUImageTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F22960FC1645C20800A82EAE /* GraphicsServices */ = {
+			isa = PBXGroup;
+			children = (
+				F229610B1645C58100A82EAE /* GraphicsServices.framework */,
+				F22960FD1645C20800A82EAE /* GraphicsServices.h */,
+				F22960FE1645C20800A82EAE /* GSBase.h */,
+				F22960FF1645C20800A82EAE /* GSCapability.h */,
+				F22961001645C20800A82EAE /* GSColor.h */,
+				F22961011645C20800A82EAE /* GSEvent.h */,
+				F22961021645C20800A82EAE /* GSFont.h */,
+				F22961031645C20800A82EAE /* GSGeometry.h */,
+				F22961041645C20800A82EAE /* GSHeartbeat.h */,
+				F22961051645C20800A82EAE /* GSHiccup.h */,
+				F22961061645C20800A82EAE /* GSKeyboard.h */,
+				F22961071645C20800A82EAE /* GSMainScreen.h */,
+				F22961081645C20800A82EAE /* GSMaps.h */,
+				F22961091645C20800A82EAE /* GSStatusBar.h */,
+				F229610A1645C20800A82EAE /* GSWindow.h */,
+			);
+			name = GraphicsServices;
+			path = "../../Downloads/iphone-private-frameworks-master/GraphicsServices";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -473,6 +590,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F22960F616456E6E00A82EAE /* PBXTargetDependency */,
 			);
 			name = SNES4iOS;
 			productName = SNES4iPad;
@@ -500,12 +618,35 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F22960E916456E6500A82EAE /* Products */;
+					ProjectRef = F22960E816456E6500A82EAE /* GPUImage.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* SNES4iOS */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F22960F216456E6600A82EAE /* libGPUImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGPUImage.a;
+			remoteRef = F22960F116456E6600A82EAE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F22960F416456E6600A82EAE /* GPUImageTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GPUImageTests.octest;
+			remoteRef = F22960F316456E6600A82EAE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1D60588D0D05DD3D006BFB54 /* Resources */ = {
@@ -549,6 +690,7 @@
 				BFFFEABC14B7F21400B4B2C7 /* sustainButton@2x.png in Resources */,
 				BFFFEABF14B7F3D100B4B2C7 /* sustainButtonHighlighted@2x.png in Resources */,
 				BFFFEAC014B7F3D100B4B2C7 /* sustainButtonHighlighted.png in Resources */,
+				F229610E1645D6F000A82EAE /* Filters.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,10 +718,22 @@
 				BF7B7A0B14A64BEA00014E61 /* SNESControllerViewController.m in Sources */,
 				520D7C3E1618A9C4009306B7 /* iCadeReaderView.m in Sources */,
 				520D7C441618AA10009306B7 /* iCadeViewController.m in Sources */,
+				F229612C164790E000A82EAE /* GPUImageFilterScanlines.m in Sources */,
+				F2648EC71647AB3F003FE846 /* GPUImageDotnBloomFilter.m in Sources */,
+				F2648ECA1647BCC3003FE846 /* GPUImageCRTFilter.m in Sources */,
+				F2648ECD1647CCA0003FE846 /* GPUImageOldFilmFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F22960F616456E6E00A82EAE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GPUImage;
+			targetProxy = F22960F516456E6E00A82EAE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
@@ -589,6 +743,7 @@
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Third Rail, LLC";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
@@ -597,15 +752,21 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = SNES4iOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = APP_BUILD;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/\"";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/\"",
+					"\"$(SRCROOT)/GPUImage\"/**",
+				);
 				INFOPLIST_FILE = "SNES4iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/src/snes4iphone_src\"",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = SNES4iOS;
+				PROVISIONING_PROFILE = "60E75309-AA21-4D8F-946C-E62A25A11B71";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 			};
 			name = Debug;
@@ -616,6 +777,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Third Rail, LLC";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
@@ -623,15 +785,21 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = SNES4iOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = APP_BUILD;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/\"";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/\"",
+					"\"$(SRCROOT)/GPUImage\"/**",
+				);
 				INFOPLIST_FILE = "SNES4iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/src/snes4iphone_src\"",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = SNES4iOS;
+				PROVISIONING_PROFILE = "60E75309-AA21-4D8F-946C-E62A25A11B71";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = armv7;
 			};
@@ -666,6 +834,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Third Rail, LLC";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
@@ -673,15 +842,21 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = SNES4iOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = APP_BUILD;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/\"";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/\"",
+					"\"$(SRCROOT)/GPUImage\"/**",
+				);
 				INFOPLIST_FILE = "SNES4iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/src/snes4iphone_src\"",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = SNES4iOS;
+				PROVISIONING_PROFILE = "60E75309-AA21-4D8F-946C-E62A25A11B71";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = armv7;
 			};
